@@ -1,2 +1,2 @@
 # Recipology documentation
- food ontology 
+ Food ontology: Information, Organization, Knowledge
