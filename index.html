@@ -262,14 +262,59 @@
             <p>Obviously, we didn’t have the chance to test the ontology in the field or for some clients. 
             </p>
           </ol>
+
+          <h3>3.2 Protégé</h3>
+          <p>Protégé is a free, open-source platform with a suite of tools to construct domain models and knowledge-based applications with ontologies. We used Protegé to factually design our ontology.  
+          </p>
+
+          <h3>3.3 Python</h3>
+          <p>Python is an interpreted, object-oriented, high-level programming language with dynamic semantics. Its high-level built-in data structures, combined with dynamic typing and dynamic binding. We used Python to fulfill three tasks: 
+          </p>
+          <ul>
+            <li>To scrape information while using a proxy to not get blacklisted by the different websites. For this operation, we used two libraries: Urlib3 & BeautifulSoup. The first is a powerful, user-friendly HTTP client for Python to manage HTTP requests and we used it to forward such requests through a proxy; the second is a Python library designed for quick turnaround projects like screen-scraping and we used it for the pure scraping operation from HTML pages.</li>
+            <li>Then, we used this information to populate our ontology following the structure of the data stored on the different websites. OwlReady2 is the library that we used to complete this part. OwlReady2  can load OWL 2.0 ontologies as Python objects, modify them, save them, and perform reasoning via HermiT (included). Owlready2 allows a transparent access to OWL ontologies (contrary to usual Java-based API).
+            </li>
+            <li>Finally, we used Flask to visualize the template. Flask is a web application framework written in Python.
+            </li>
+          </ul>
+          <p>Our code is composed mainly of 5 classes:
+          </p>
+          <ol>
+            <li><strong>Connector</strong>. It takes care of establishing an anonymous connection to avoid IP address recognition. This is necessary to avoid IP blacklisting. It also implements a system of dynamic rotation of proxies: once caught the proxy free working continues to use it to send the next requests.
+            </li>
+            <li><strong>GZScraper</strong>. It is responsible for indicating to the connector what resources it needs to extract all the information. This is a site-specific class. Each site will have its own class and methods (e.g. GialloZafferano has one class, LaRepubblica has another class). To generalize too much would be a mistake in this case. The cause is the great variability of the technologies used to create websites, which affects the HTML output. As the last step, this class manages to structure the CSV / JSON file where the data will be stored.
+            </li>
+            <li><strong> Ontobuilder</strong>: Questa classe è adibita al popolamento dell'ontologia di base con le informazioni recuperate tramite lo scraping
+            </li>
+            <li><strong>he query_class</strong>: questa classe è composta da diversi metodi, ognuno dei quali svolge una particolare query sul database
+            </li>
+            <li><strong>Template</strong>: un piccolo pezzo di html per visualizzare i risultati ottenuti con il popolamento dell'ontologia e l'attivazione del reasoner sull'ontologia
+            </li>
+          </ol>
+
+          <h3>3.4 Workflow</h3>
+          <p>To obtain the ontology, we went through several steps:
+          </p>
+          <ol>
+            <li>Reading existing scientific papers and ontologies on the same topic</li>
+            <li>Defining initial competency questions</li>
+            <li>Creation of some rough schemas
+            </li>
+            <li>Formalisation of a basic ontology schema on Protègeè
+            </li>
+            <li>Construction of the computational workflow
+            </li>
+          </ol>
+
+          <h3>3.5 Our Pipeline</h3>
 		
         
 		<hr class="divider">
 		
-		<!-- Ontology
+		<!-- Guidelines Ontology
 		============================ -->
         <section id="idocs_layout">
-          <h2>Guidelines to the Ontology</h2>
+          <h2>4. Guidelines to the Ontology</h2>
           <p>Our ontology is the result of the consultation of several scientific papers, and its objective is to facilitate the retrieval of recipes and their information through queries. In addition, a logical inference allows the automatic classification of recipes within various categories defined within the ontology.
             Our ontology revolves around the class "recipe". A recipe is an entity produced by composing a series of ingredients through a specific, human process. In our functional perspective, we consider a recipe defined by different characteristics:
             </p>
