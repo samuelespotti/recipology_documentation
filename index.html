@@ -98,22 +98,18 @@
 	<div class="idocs-navigation bg-light">
       <ul class="nav flex-column ">
         <li class="nav-item"><a class="nav-link active" href="#idocs_start">Introduction</a>
-          <ul class="nav flex-column">
-            <li class="nav-item"><a class="nav-link" href="#idocs_installation">What is a Recipe?</a></li>
-            <li class="nav-item"><a class="nav-link" href="#idocs_html_structure">Our Process</a></li>
-            
-          </ul>
         </li>
-        <li class="nav-item"><a class="nav-link" href="#idocs_layout">Ontology</a>
-          <ul class="nav flex-column">
-			<li class="nav-item"><a class="nav-link" href="#idocs_header">Guidelines to the Ontology</a></li>
-			<li class="nav-item"><a class="nav-link" href="#idocs_navbar">Navbar</a></li>
-			<li class="nav-item"><a class="nav-link" href="#idocs_sidebar">Sidebar</a></li>
-			<li class="nav-item"><a class="nav-link" href="#idocs_footer">Footer</a></li>
-			<li class="nav-item"><a class="nav-link" href="#idocs_box_layout">Box Layout</a></li>
-          </ul>
+        <li class="nav-item"><a class="nav-link" href="#idocs_layout">A brief description of the project</a>
+         
         </li>
-        <li class="nav-item"><a class="nav-link" href="#idocs_content">Content</a>
+        <li class="nav-item"><a class="nav-link" href="#idocs_content">Our Process & Tools</a>
+          <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link" href="#idocs_header">Our Process</a></li>
+            <li class="nav-item"><a class="nav-link" href="#idocs_navbar">Navbar</a></li>
+            <li class="nav-item"><a class="nav-link" href="#idocs_sidebar">Sidebar</a></li>
+            <li class="nav-item"><a class="nav-link" href="#idocs_footer">Footer</a></li>
+            <li class="nav-item"><a class="nav-link" href="#idocs_box_layout">Box Layout</a></li>
+                </ul>
 			<ul class="nav flex-column">
             <li class="nav-item"><a class="nav-link" href="#idocs_typography">Typography</a></li>
             <li class="nav-item"><a class="nav-link" href="#idocs_code">Code</a></li>
@@ -123,7 +119,7 @@
 			<li class="nav-item"><a class="nav-link" href="#idocs_video">Video</a></li>
           </ul>
 		</li>
-        <li class="nav-item"><a class="nav-link" href="#idocs_components">Components</a>
+        <li class="nav-item"><a class="nav-link" href="#idocs_components">Guidelines to the ontology</a>
           <ul class="nav flex-column">
             <li class="nav-item"><a class="nav-link" href="#idocs_accordion">Accordion</a></li>
             <li class="nav-item"><a class="nav-link" href="#idocs_tabs">Tabs</a></li>
@@ -131,11 +127,12 @@
             <li class="nav-item"><a class="nav-link" href="#idocs_helper_classes">Helper Classes</a></li>
           </ul>
         </li>
-		<li class="nav-item"><a class="nav-link" href="#idocs_faq">FAQ</a></li>
-        <li class="nav-item"><a class="nav-link" href="#idocs_source_credits">Source & Credits</a></li>
-        <li class="nav-item"><a class="nav-link" href="#idocs_support">Support</a></li>
-		<li class="nav-item"><a class="nav-link" href="#idocs_templates">More Templates</a></li>
-		<li class="nav-item"><a class="nav-link" href="#idocs_changelog">Changelog</a>
+		<li class="nav-item"><a class="nav-link" href="#idocs_faq">Problems and open questions</a></li>
+    <li class="nav-item"><a class="nav-link" href="#idocs_faq">Further implementations</a></li>
+    <li class="nav-item"><a class="nav-link" href="#idocs_faq">Bibliography</a></li>
+  
+  
+    
 			<ul class="nav flex-column">
             <li class="nav-item"><a class="nav-link" href="#v1-1">v1.1</a></li>
             <li class="nav-item"><a class="nav-link" href="#v1-0">v1.0</a></li>
@@ -224,22 +221,46 @@
             </p>
 
           </section>
+
+         
+		<hr class="divider">
+		
+    <!-- Brief Introduction
+============================ -->
+    <section id="idocs_html_structure">
+      <h2>A brief description of the project</h2>
+      <p>RECIPOLOGY is an ontology designed to classify food recipes and it was designed with a practical scope in mind. Namely, our starting idea was to create an ontology able to classify dynamically the information coming from different recipes’ websites and thus, develop a harmonized, unique, and automated information classification system. The final goal will be to have a perfectly functioning ontology that can be integrated with different resources. Furthermore, we envisioned a possible practical application in mobile or web kitchen app, able to provide users with different, classified recipes. Yet, through the development of this project, different issues emerged narrowing down the scope of RECIPOLOGY.
+      </p>
+      
+     
         
 		<hr class="divider">
 		
         <!-- Our Process
 		============================ -->
         <section id="idocs_html_structure">
-          <h2>Our Process</h2>
-          <p>Our process starts with information extraction. To put it simply: we take existing information, we try to structure it and then we insert it into an ontology. Finally, we normalize the data keeping in mind the target ontology. We scrape data from culinary websites and try to apply our ontology to them to test out their pragmatic value.
+          <h2>Our Process and Tools</h2>
+          <h3>3.1 The eXtreme Design Methodology
+          </h3>
+          <p>For designing our ontology, we adopted the eXtreme Design Methodology (XD) described in Blomqvist, E., Hammar, K., Presutti, V. (2016). The advantages of such methodology are several;  in particular, what matters the most for us is the pragmatic and real-world approach of XD. Let’s unpack this. 
           </p>
-          <p>In order to do this we have implemented the following Python classes: 
-          </p>
+          
           <ol>
-            <li>The Connector. It takes care of establishing an anonymous connection to avoid IP address recognition. This is necessary to avoid IP blacklisting. It also implements a system of dynamic rotation of proxies: once caught the proxy free working continues to use it to send the next requests.
+            <li>“XD needs high involvement of a “customer”, i.e., someone who is going to use the ontology later on, either directly or indirectly”. 
+              As we envisioned the use of this ontology for a practical reason, it is useful to rely on such a methodology where the customer is central.  
             </li>
-            <li>The GZScraper. It is responsible for indicating to the connector what resources it needs to extract all the information. This is a site-specific class. Each site will have its own class and methods (e.g. GialloZafferano has one class, Repubblica has another class). To generalize too much would be a mistake in this case. The cause is the great variability of the technologies used to create websites, which affects the HTML output. As the last step, this class manages to structure the CSV / JSON file where the data will be stored.
+            <li>“Second, XD is highly requirements-driven, i.e., the ontology should contain exactly what is needed and nothing else.”. 
+              Specifically, this means that the ontology is designed according to stories expressed through competency questions (described in section 4.1).
             </li>
+            <li>“Third, the XD methodology is iterative, and incrementally builds the end result. This means that the methodology will produce a tangible result early on, while then extending that result in each iteration.”
+              This characteristic of the XD workflow also matched perfectly the domain of our ontology. Recipes can be described according to different levels of complexity and granularity thus adopting an iterative process is really useful. First, we described a base ontology and then we enriched it with more information coming from competency questions.              
+            </li>
+            <a class="logo ml-md-3" href="index.html" title="Design"> <img src="assets/images/design.png" alt="Design" style="width:700px;height:500px;" />  </a>
+            <p><i>1541 CE manuscript of Apicius' De Re Coquinaria - a Roman cookbook - here named De Re Culinaria.</i></p>
+            <span class="text-2 ml-2"></span>
+
+            <p>Obviously, we didn’t have the chance to test the ontology in the field or for some clients. 
+            </p>
           </ol>
 		
         
