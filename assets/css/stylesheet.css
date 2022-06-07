@@ -2959,3 +2959,19 @@ input:-internal-autofill-selected {
   left: -40px;
   border-radius: 4px 0px 0px 4px;
 }
+
+
+img {
+  width: 40%;
+}
+
+table td, table th {
+  padding: 10px;
+  font-size: medium;
+}
+
+@media (max-width: 950px) {
+  img {
+    width: 100%;
+  }
+  }
