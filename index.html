@@ -250,11 +250,14 @@
             </li>
             <li><strong>GZScraper</strong>. It is responsible for indicating to the connector what resources it needs to extract all the information. This is a site-specific class. Each site will have its own class and methods (e.g. GialloZafferano has one class, LaRepubblica has another class). To generalize too much would be a mistake in this case. The cause is the great variability of the technologies used to create websites, which affects the HTML output. As the last step, this class manages to structure the CSV / JSON file where the data will be stored.
             </li>
-            <li><strong>Ontobuilder</strong>: Questa classe è adibita al popolamento dell'ontologia di base con le informazioni recuperate tramite lo scraping
+            <li><strong>Ontobuilder</strong>: This class is used to populate the base ontology with the information retrieved by scraping
+
             </li>
-            <li><strong>The query_class</strong>: questa classe è composta da diversi metodi, ognuno dei quali svolge una particolare query sul database
+            <li><strong>The query_class</strong>: this class consists of several methods, each of which performs a particular query on the database
+
             </li>
-            <li><strong>Template</strong>: un piccolo pezzo di html per visualizzare i risultati ottenuti con il popolamento dell'ontologia e l'attivazione del reasoner sull'ontologia
+            <li><strong>Template</strong>:  a small piece of HTML to display the results obtained by populating the ontology and triggering the reasoner on the ontology
+
             </li>
           </ol>
 
@@ -410,6 +413,7 @@
               <td>Group 5</td>
               <td><strong>Fat and oils.</strong>It includes all kinds of oil and fat used to season, e.g. olive oil, seed oil, butter, margarine, lard, cream, etc.
               </td>
+              <td>
               <ul>
                 <li>Lipids
                 </li>
@@ -553,7 +557,7 @@
       <ul>
         <li><strong>query_for_selection_individuals:</strong> deals with retrieving for each individual recipe the corresponding selection operations. From these, it retrieves the corresponding ingredient and its quantity.</li>
         <li><strong>query_for_categories:</strong> it deals with retrieving the categories of the recipes, under the class Recipe_for_type_GialloZafferano.</li>
-        <li><strong>combination_category_informations_of_individuals:</strong> Combines the results of the previous categories. Each recipe is now a dictionary key, with values of its own ingredients, corresponding quantities, and finally the category of Giallo Zafferano.</li>
+        <li><strong>combination_category_informations _of_individuals:</strong> Combines the results of the previous categories. Each recipe is now a dictionary key, with values of its own ingredients, corresponding quantities, and finally the category of Giallo Zafferano.</li>
         <li><strong>query_for_inferred_categories:</strong> retrieves the categories into which the recipes were reclassified after the reasoner action. These categories are added to the file obtained in the previous step.</li>
       </ul></p>
     <h3>4.9 Reasoning and Display results with Flask</h3>
