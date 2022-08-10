@@ -243,17 +243,18 @@
             <li>Finally, we used Flask to visualize the template. Flask is a web application framework written in Python.
             </li>
           </ul>
-          <p>Our code is composed mainly of 5 classes:
+          <p>Our code is composed mainly of 5 pieces:
           </p>
           <ol>
             <li><strong>Connector</strong>. It takes care of establishing an anonymous connection to avoid IP address recognition. This is necessary to avoid IP blacklisting. It also implements a system of dynamic rotation of proxies: once caught the proxy free working continues to use it to send the next requests.
             </li>
-            <li><strong>GZScraper</strong>. It is responsible for indicating to the connector what resources it needs to extract all the information. This is a site-specific class. Each site will have its own class and methods (e.g. GialloZafferano has one class, LaRepubblica has another class). To generalize too much would be a mistake in this case. The cause is the great variability of the technologies used to create websites, which affects the HTML output. As the last step, this class manages to structure the CSV / JSON file where the data will be stored.
+            <li><strong>Scraper</strong>. It is responsible for indicating to the connector what resources it needs to extract all the information. This is a site-specific class. Each site will have its own class and methods (e.g. GialloZafferano has one class, LaRepubblica has another class). To generalize too much would be a mistake in this case. The cause is the great variability of the technologies used to create websites, which affects the HTML output. As the last step, this class manages to structure the CSV / JSON file where the data will be stored.
             </li>
-            <li><strong>Ontobuilder</strong>: This class is used to populate the base ontology with the information retrieved by scraping
+            <li><strong>OntoBuilder</strong>: This class is used to populate the base ontology with the information retrieved by scraping
 
             </li>
-            <li><strong>The query_class</strong>: this class consists of several methods, each of which performs a particular query on the database
+            <li><strong>API endpoint</strong>: this is a simple API, where individuals entities can be extracted from the ontology by using a POST request with a SPARQL query as body
+               and simple GET requests for fastly quering most of the information inside the ontology. 
 
             </li>
             <li><strong>Template</strong>:  a small piece of HTML to display the results obtained by populating the ontology and triggering the reasoner on the ontology
@@ -265,9 +266,20 @@
           
 
           <h3>3.4 Our Pipeline</h3>
-          <a class="logo ml-md-3" title="Manoscritto"> <img src="assets/images/Recipology_workflow.png" class="img-fluid" alt="Pipeline" style="width:100%"  /> </a>
+          <a class="logo ml-md-3" title="Recipology Pipeline"> <img src="assets/images/Recipology_workflow.png" class="img-fluid" alt="Pipeline" style="width:100%"  /> </a>
           <p><i>Figure 5. Recipology Pipeline</i></p>
           <span class="text-2 ml-2"></span>
+          <p>Our pipeline is composed by the following steps:
+          </p>
+          <ol>
+            <li><strong>Scraping and creation of the dataset</strong>: using the connector and scraper we derive all the information needed to create our recipe dataset. The information extracted is: recipe name, ingredients, steps to make the recipes, and quantity of ingredients.</li>
+            <li><strong>Creation of ontologies containing the data*</strong>: creation via the OWLReady 2 library of two pipelines to create two owl files containing the rearranged data: one file with only the recipes and one file with only the ingredients.</li>
+            <li><strong>Creation of the recipology ontology*</strong>: creation of a third pipeline that combines the ontologies obtained from the previous two pipelines, so as to obtain the final recipology ontology.
+            </li>
+            <p>
+              <i>* all the ontology pipeline are inside the run.py file and can be executed if the dataset is provided </i>
+            </p>
+          </ol>
 
 		
         
@@ -283,16 +295,17 @@
 
           <h3>4.1 Competency questions</h3>
           <p>Following the XD methodology, we developed some competency questions to understand the scope of our ontology.
-            They are grouped into four scenarios that help us to explore the user0s needs and the actual situations that can happen daily.
+            They are grouped into four scenarios that help us to explore the users needs and the actual situations that can happen daily.
+            in the ontology actually only some of the planned scenarios are implemented, due to development time. The implemented scenarios are indicated in parentheses.
             </p>
           <h4>Scenario nr.1</h4>
           <p><strong>Diet</strong>.The users want to eat food according to a specific diet for a specific period of time. The user tells the system what I want to build the diet on, and the system is able to return to them a list of recipes organized by day.
           </p>
-          <p><i>Competency questions:</i></p>
+          <p><i>Competency questions: (Implemented)</i></p> 
           <ol>
             <li>Which is the kind of food on which the user wants to build their diet?
             </li>
-            <li>Which kitchen tools does the user have?
+            <li>Which are the ingredients necessary for complete a selected dish?
             </li>
             <li>Which recipes in the databases match the requirements?</li>
           </ol>
@@ -429,15 +442,15 @@
 
           <p>Then, an over-classification is applied to the groups, which are divided in Energetic, Protective and Plastic aliments,  as represented in the following schema:
           </p>
-          <a class="logo ml-md-3" title="Manoscritto"> <img src="assets/images/schema1.png" alt="ispirations"  /> </a>
+          <a class="logo ml-md-3" title="Energetic Aliments"> <img src="assets/images/schema1.png" alt="ispirations"  /> </a>
           <p><i>Figure 8. Energetic Aliments </i></p>
           <span class="text-2 ml-2"></span>
           <br>
-          <a class="logo ml-md-3" title="Manoscritto"> <img src="assets/images/schema2.png" alt="ispirations" /> </a>
+          <a class="logo ml-md-3" title="Protective Aliments"> <img src="assets/images/schema2.png" alt="ispirations" /> </a>
           <p><i>Figure 9. Protective Aliments </i></p>
           <span class="text-2 ml-2"></span>
           <br>
-          <a class="logo ml-md-3" title="Manoscritto"> <img src="assets/images/schema3.png" alt="ispirations"/> </a>
+          <a class="logo ml-md-3" title="Plastic Aliments"> <img src="assets/images/schema3.png" alt="ispirations"/> </a>
           <p><i>Figure 10. Plastic Aliments </i></p>
           <span class="text-2 ml-2"></span>
           <br>
@@ -447,13 +460,11 @@
     <p>Our ontology revolves around three main categories: <strong>Execution, Recipe, and Ingredient.</strong>
     </p>
     <ol>
-      <li><strong>Execution</strong> = this class represents the necessary steps to complete the recipe. 
-      </li>
       <li><strong>Recipe</strong> = this class represents food recipes. A recipe is an entity produced by the composition of a series of ingredients through a specific, human process. 
       </li>
       <li><strong>Ingredient</strong> = this class represents ingredients used to assemble recipes.</li>
     </ol>
-    <a class="logo ml-md-3" title="Manoscritto"> <img src="assets/images/sette.png" class="img-fluid" alt="ispirations"  /> </a>
+    <a class="logo ml-md-3" title="three main classes"> <img src="assets/images/sette.png" class="img-fluid" alt="ispirations" style="width: 15%;" /> </a>
     <p><i>Figure 11. The three main classes on Protégé
     </i></p>      
     <span class="text-2 ml-2"></span>
@@ -461,30 +472,30 @@
     <p>Then, the class Ingredient is divided into different subclasses that reflect the food classification system presented in section 4.2. So, we have:
     </p>
     <ol>
-      <li><strong>Ingredient_by_food groups</strong> = this series of subclasses simply reflects the division of ingredients in groups, as seen in “Scienza e cultura degli alimenti”. 
+      <li><strong>Ingredient by food groups</strong> = this series of subclasses simply reflects the division of ingredients in groups, as seen in “Scienza e cultura degli alimenti”. 
       </li>
-      <li><strong>Ingredient_by_functions</strong> = this series of subclasses also comes from the same classification system and, in our ontology, it is automatically inferred starting from the food group. 
+      <li><strong>Ingredient by functions</strong> = this series of subclasses also comes from the same classification system and, in our ontology, it is automatically inferred starting from the food group. 
         <i>E.g. the ingredient X is part of group 1 OR group 5, then ingredient X is part of Energetic Ingredients.</i>        
       </li>
-      <li><strong>Ingredient_by _category</strong>: this series of subclasses is our recombination of the previous two classes and it’s the key series for actually classifying recipes. We summarized the scientific classes into a more practical and agile system of 6 sub-classes. 
+      <li><strong>Ingredient by category</strong>: this series of subclasses is our recombination of the previous two classes and it’s the key series for actually classifying recipes. We summarized the scientific classes into a more practical and agile system of 6 sub-classes. 
         <i>E.g. the ingredient X is part of class Beverage OR class Condiment OR Ingredient Group 2 OR Ingredient Group 5, then ingredient X is part of Vegan Ingredient.</i>
         </li>
     </ol>
     <p>It is important to specify that these three sets of subclasses are equal to each other that organize differently the same content. So, the ingredient Y is part of all three sub-categories without any contrast because they are <i>logically equivalent.</i>
     </p>
-    <a class="logo ml-md-3" title="Manoscritto"> <img src="assets/images/otto.png" alt="ispirations" /> </a>
+    <a class="logo ml-md-3" title="subclasses of the class Ingredient"> <img src="assets/images/otto.png" alt="ispirations" /> </a>
     <p><i>Figure 12. The subclasses of the class Ingredient on Protégé</i></p>      
           <span class="text-2 ml-2"></span>
           <br>
     <p>Also, the class <i>recipe</i> is divided into two equal sets of subclasses:
     </p>
     <ol>
-      <li><strong>Recipe_by_category</strong> = this series of subclasses simply mirrors the Ingredient_by_category subclass, so that according to ingredient category, also the recipe category is defined. 
+      <li><strong>Recipe by course</strong> = this series of subclasses simply mirrors the Ingredient_by_category subclass, so that according to ingredient category, also the recipe category is defined. 
       </li>
-      <li><strong>Recipe_by_type_GialloZafferano</strong> = this series of subclasses is useful for the dynamic scope of our ontology, so that classification systems can be imported by recipes’ websites and they can have an equivalent classification in our system. GialloZafferano is just the first example but RECIPOLOGY can be expanded with the integration of other systems.      
+      <li><strong>Recipe by diet</strong> = this series of subclasses is useful for the dynamic scope of our ontology, so that classification systems can be imported by recipes’ websites and they can have an equivalent classification in our system. GialloZafferano is just the first example but RECIPOLOGY can be expanded with the integration of other systems.      
       </li>
     </ol>
-    <a class="logo ml-md-3" title="Manoscritto"> <img src="assets/images/nove.png" alt="ispirations"  /> </a>
+    <a class="logo ml-md-3" title="The subclasses of the class Recipe"> <img src="assets/images/nove.png" alt="ispirations"  /> </a>
     <p><i>Figure 13. The subclasses of the class Recipe on Protégé
     </i></p>  
           <span class="text-2 ml-2"></span>
@@ -511,55 +522,45 @@
     </i></p>      
     <span class="text-2 ml-2"></span>
     <br>
-    <p>Here is an example of <strong>one recipe</strong>. With our script, we assign to each recipe three categories of types: 
+    <p>Here is an example of <strong>one recipe</strong>. With our script, we model an individual like this: 
     </p>
     <ol>
-      <li>the <strong>connection</strong> with the ingredients (which are themselves individuals) through the quantifier some, useful for all the categories that require just the presence of at last one element (within the ones specified in the category itself); 
+      <li><strong>withIngredient</strong>: an object property deduced from the HasSelectionOperation proeprty. It connects the recipe directly to the ingredients.
       </li>
-      <li><strong>The constrain</strong> only for closing the world of the considered individual in order to simplify the reasoning process;
+      <li><strong>The type with only</strong>: for allowing reasoning and, thus, the classification of recipes we have to close the individual on the ingredients. For achiving this we create a type on the individual.
       </li>
-      <li>Finally, the <strong>connection</strong> with the aforementioned selection operation.</li>
+      <li><strong>HasSelectionOperation</strong>: is the connection of the recipe with a single ingredient and its quantity. This resolved the aforementioned problem of n-ary relationship. The name of this design pattern is the reification of the entity.</li>
     </ol>
 
-    <a class="logo ml-md-3" title="Manoscritto"> <img src="assets/images/dodici.png" alt="ispirations"  /> </a>
+    <a class="logo ml-md-3" title="Manoscritto"> <img src="assets/images/dodici.png" alt="ispirations" style="width: 75%;"  /> </a>
     <p><i>Figure 16. The selection operation on Protégé </i></p>     
     <span class="text-2 ml-2"></span>
     <br>
 
     <p>Then we have an example of <strong>selection operations</strong>: the script populates the <i>selection operation</i> class with an individual for each ingredient for each recipe. Then, the script assigns the two entities described above to each selection operation's individual: one for the corresponding ingredient and another for the quantity of this latter ingredient.
     </p>
-    <a class="logo ml-md-3" title="Manoscritto"> <img src="assets/images/image11.png" class="img-fluid" alt="ispirations"  /> </a>
+    <a class="logo ml-md-3" title="Manoscritto"> <img src="assets/images/image11.png" class="img-fluid" alt="ispirations"  style="width: 75%;"/> </a>
     <p><i>Figure 17. The selection operation subclass
     </i></p>      
     <span class="text-2 ml-2"></span>
     <br>
-    <p>Here is <strong>an ingredient example</strong>: for this operation, the script provides a series of bash steps to the user in order to classify the ingredients as individuals into the corresponding food group under the <i>ingredient_by_food_group</i> class.
-    </p>
-    <a class="logo ml-md-3" title="Manoscritto"> <img src="assets/images/image8.png" class="img-fluid" alt="ispirations"  /> </a>
-    <p><i>Figure 18. The selection operation on the ingredients</i></p>     
-    <span class="text-2 ml-2"></span>
-    <br>
     <h3>4.7 Reasoning and classification of recipes</h3>
     <p>Our ontology adopt a <i>reasoner</i>, an algorithm built-in Protégé, that is able to make logical inferences. This reasoner re-classifies the recipes that we scraped into the categories that we defined into <i>recipes_by_category</i>. The reasoner is able to make this kind of reasonement thanks to the types which we have previously defined on individuals.</p>
-      <br>
-      <p>The classes to be populated without the reasoner</p>
-      <a class="logo ml-md-3" title="Manoscritto"> <img src="assets/images/Cattura.JPG" class="img-fluid" alt="ispirations"  /> </a>
-      <p><i>Figure 19. The classes without the reasoner on Protégé </i></p>    
-      <span class="text-2 ml-2"></span>
-      <br>
-    <p>The classes populated thanks to the reasoner</p>
-    <a class="logo ml-md-3" title="Manoscritto"> <img src="assets/images/Cattura1.JPG" class="img-fluid" alt="ispirations"  /> </a>
+    <p>The individual with new types thanks to the reasoner</p>
+    <a class="logo ml-md-3" title="Manoscritto"> <img src="assets/images/reasoning_example.png" class="img-fluid" alt="ispirations" style="width: 75%;" /> </a>
     <p><i>Figure 20. The classes with the reasoner on Protégé </i></p>     
     <span class="text-2 ml-2"></span>
     <br>
     <h3>4.8 Query information from ontology</h3>
-    <p>Before the last step (visualization), we created a class to retrieve information from the ontology in a systematic way, respecting our starting skill queries. The queries are obtained by combining both Sparbl and simplified queries from the Owlready2 library. The results of the queries are then combined, resulting in an overall final file. The script consists of the following functions:
+    <p>Before the last step (visualization), we created an API endpoint to retrieve information from the ontology in a systematic way, respecting our starting skill queries.
       <ul>
-        <li><strong>query_for_selection_individuals:</strong> deals with retrieving for each individual recipe the corresponding selection operations. From these, it retrieves the corresponding ingredient and its quantity.</li>
-        <li><strong>query_for_categories:</strong> it deals with retrieving the categories of the recipes, under the class Recipe_for_type_GialloZafferano.</li>
-        <li><strong>combination_category_informations _of_individuals:</strong> Combines the results of the previous categories. Each recipe is now a dictionary key, with values of its own ingredients, corresponding quantities, and finally the category of Giallo Zafferano.</li>
-        <li><strong>query_for_inferred_categories:</strong> retrieves the categories into which the recipes were reclassified after the reasoner action. These categories are added to the file obtained in the previous step.</li>
+        <li><strong>https://recipology-api.herokuapp.com/free_query</strong>: a POST request for send a custom SPARQL query</li>
+        <li><strong>https://recipology-api.herokuapp.com/recipes/{name_recipe}:</strong> a GET request for retrieve a recipe or a list of recipes starting from the name*</li>
+        <li><strong>https://recipology-api.herokuapp.com/ingredients/{name_ingredient}:</strong> a GET request for retrieve a recipe or a list of recipes starting from the ingredient or ingredients*</li>
+        <li><strong>https://recipology-api.herokuapp.com/categories/{name_category}:</strong> a GET request for retrieve a recipe or a list of recipes starting from the category or categories*</li>
       </ul></p>
+      <p><i>* all the GET requests concatenate the term provided in the list with an OR logic symbol</i></p>
+      <p><a href="https://recipology-api.herokuapp.com/">Try the API</a></p>
     <h3>4.9 Reasoning and Display results with Flask</h3>
     <p>Results retrieved via queries are deployed to a simple HTML template via Flask. The application dynamically displays a random recipe fished from within the ontology, highlighting its inferred categories thanks to the reasoner.
     </p>
